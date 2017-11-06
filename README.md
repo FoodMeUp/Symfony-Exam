@@ -12,17 +12,19 @@ He is asking you to help him build a modern REST API to look into this database 
 Features
 ----
 
-- You provide a template with an input which acts like a search bar. Users will enter ingredient names in this search bar
+- You will download the file directly from the web and parse it programatically. Import will be made without phpmyadmin.
+- You provide a template with an input which acts like a search bar. Users will enter ingredient names in this search bar.
 - You will return a list of possible matches against this search string (ingredient names from the CSV file)
-- When the user clicks a match, he gets the list of nutrients listed in the csv file.
+- When the user clicks a match, he gets the list of nutrients
+- Next step : the user is able to exclude responses where the ingredient contains a specific allergen.
 
 How to
 ----
 
-- You should import the CSV file in a MySQL format
+- You should import the CSV file in a MySQL format without phpmyadmin, programatically
+- You use code best practices : dry, formating, architecture, model
 - Requests are made through a REST API
 - JSON data is sent back
-- Do not spend much time on design before you made your best on the backend part
 
 
 Extra
@@ -53,7 +55,7 @@ Try to display the most relevant results first. You're free to opimize the searc
 
 ### What should I do when I'm finished?
 
-Please create a repository on Github and send us its link.
+Please make a PR on the repository and send us an email to let us know we can check it.
 
 ### How is the exam graded?
 
