@@ -4,8 +4,10 @@
     "require": {
         "php": "^7.0.8",
         "league/csv": "^9.1",
+        "sensio/framework-extra-bundle": "^5.0",
         "symfony/console": "^3.3",
         "symfony/framework-bundle": "^3.3",
+        "symfony/orm-pack": "^1.0",
         "symfony/yaml": "^3.3"
     },
     "require-dev": {
