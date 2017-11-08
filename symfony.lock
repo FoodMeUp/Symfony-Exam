@@ -94,5 +94,8 @@
     },
     "symfony/dotenv": {
         "version": "v3.3.10"
+    },
+    "league/csv": {
+        "version": "9.1.0"
     }
 }
