@@ -68,7 +68,11 @@ class ImportCommand extends Command
             $energies = $nutrients = [];
 
             foreach ($row as $key => $value) {
-                $value = utf8_encode($value);
+                $value = utf8_encode(trim($value));
+
+                if (empty($value)) {
+                    continue;
+                }
 
                 if (preg_match('{^Energie, (.+?)$}', $key, $matches)) {
                     $energies[utf8_encode($matches[1])] = $value;
