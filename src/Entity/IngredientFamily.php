@@ -24,7 +24,7 @@ class IngredientFamily
     /** @ORM\Column(type="string") */
     private $name;
 
-    /** @ORM\OneToMany(targetEntity="Ingredient", mappedBy="family") */
+    /** @ORM\OneToMany(targetEntity="Ingredient", mappedBy="family", cascade={"persist", "remove"}) */
     private $ingredients;
 
     public function __construct(string $name)
