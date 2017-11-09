@@ -70,7 +70,7 @@ class ImportCommand extends Command
             $energies = $nutrients = [];
 
             foreach ($row as $key => $value) {
-                $value = utf8_encode(trim($value));
+                $value = trim(utf8_encode($value));
 
                 if (empty($value)) {
                     continue;
