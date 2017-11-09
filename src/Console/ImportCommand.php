@@ -41,10 +41,18 @@ class ImportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $content = @file_get_contents($input->getArgument('file'));
+
+        if (!$content) {
+            $reason = error_get_last();
+
+            throw new RuntimeException("Could not open file {$file} (reason : {$reason['message']})");
+        }
+
         $family = null;
         $currentFamilyId = null;
 
-        foreach ($this->reader->read($input->getArgument('file'), $input->getOption('delimiter')) as $row) {
+        foreach ($this->reader->read($content, $input->getOption('delimiter')) as $row) {
             if ($row['ORIGGPCD'] !== $currentFamilyId) {
                 if (isset($family)) {
                     $this->familyRepo->save($family);
