@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 use Ramsey\Uuid\Uuid;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -13,6 +15,8 @@ class IngredientFamily
     /**
      * @var Uuid
      *
+     * @Groups({"all"})
+     *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
@@ -21,10 +25,16 @@ class IngredientFamily
      */
     private $id;
 
-    /** @ORM\Column(type="string") */
+    /**
+     * @Groups({"all"})
+     * @ORM\Column(type="string")
+     */
     private $name;
 
-    /** @ORM\OneToMany(targetEntity="Ingredient", mappedBy="family", cascade={"persist", "remove"}) */
+    /**
+     * @Groups({"family", "all"})
+     * @ORM\OneToMany(targetEntity="Ingredient", mappedBy="family", cascade={"persist", "remove"})
+     */
     private $ingredients;
 
     public function __construct(string $name)

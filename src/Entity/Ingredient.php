@@ -3,12 +3,15 @@ namespace App\Entity;
 
 use Ramsey\Uuid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /** @ORM\Entity */
 class Ingredient
 {
     /**
      * @var Uuid
+     *
+     * @Groups({"all"})
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="CUSTOM")
@@ -18,22 +21,31 @@ class Ingredient
      */
     private $id;
 
-    /** @ORM\Column(type="string") */
+    /**
+     * @Groups({"all"})
+     * @ORM\Column(type="string") */
     private $name;
 
     /**
      * @var iterable
+     *
+     * @Groups({"all"})
      * @ORM\Column(type="json")
      */
     private $energies = [];
 
     /**
      * @var iterable
+     *
+     * @Groups({"all"})
      * @ORM\Column(type="json")
      */
     private $nutrients = [];
 
-    /** @ORM\ManyToOne(targetEntity="IngredientFamily", inversedBy="ingredients") */
+    /**
+     * @Groups({"all"})
+     * @ORM\ManyToOne(targetEntity="IngredientFamily", inversedBy="ingredients")
+     */
     private $family;
 
     public function __construct(IngredientFamily $family, string $name, iterable $energies, iterable $nutrients)
