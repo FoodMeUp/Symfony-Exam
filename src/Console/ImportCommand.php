@@ -2,6 +2,7 @@
 namespace App\Console;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Console\Input\InputInterface;
@@ -50,6 +51,9 @@ class ImportCommand extends Command
         $family = null;
         $currentFamilyId = null;
 
+        $i = 0;
+        $progress = new ProgressBar($output);
+
         foreach ($this->reader->read($content, $input->getOption('delimiter')) as $row) {
             if ($row['ORIGGPCD'] !== $currentFamilyId) {
                 if (isset($family)) {
@@ -86,6 +90,13 @@ class ImportCommand extends Command
 
             $ingredient = new Ingredient($family, utf8_encode($name), $energies, $nutrients);
             $family->getIngredients()->add($ingredient);
+
+            ++$i;
+            $progress->advance();
         }
+
+        $progress->finish();
+
+        $output->writeln("\n<info>{$i}</info> elements were imported.");
     }
 }
