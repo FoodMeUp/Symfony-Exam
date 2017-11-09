@@ -61,7 +61,7 @@ class ImportCommand extends Command
             }
 
             $name = $row['ORIGFDNM'];
-            unset($row['ORIGGPCD'], $row['ORIGGPFR'], $row['ORIGGPFR'], $row['ORIGFDCD']);
+            unset($row['ORIGGPCD'], $row['ORIGGPFR'], $row['ORIGFDCD'], $row['ORIGFDNM']);
 
             // I could have persisted these values instead of unsetting them
             // (can make duplicated if this command is run several times...),
