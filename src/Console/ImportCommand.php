@@ -9,12 +9,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 use App\CsvReader;
+use App\Repository\IngredientFamilyRepository;
 
 use App\Entity\Ingredient;
 use App\Entity\IngredientFamily;
-
-use App\Repository\IngredientRepository;
-use App\Repository\IngredientFamilyRepository;
 
 class ImportCommand extends Command
 {
@@ -64,6 +62,10 @@ class ImportCommand extends Command
 
             $name = $row['ORIGFDNM'];
             unset($row['ORIGGPCD'], $row['ORIGGPFR'], $row['ORIGGPFR'], $row['ORIGFDCD']);
+
+            // I could have persisted these values instead of unsetting them
+            // (can make duplicated if this command is run several times...),
+            // but too lazy for that actually. And I wanted to be quick.
 
             $energies = $nutrients = [];
 
