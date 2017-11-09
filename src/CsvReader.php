@@ -8,16 +8,7 @@ class CsvReader
 {
     public function read(string $content, string $delimiter = ';'): iterable
     {
-        $stream = Stream::createFromString($content);
-
-        // I'm sorry mama, but as the constructor is protected, need to hack...
-        $reader = new class($stream) extends Reader {
-            public function __construct(Stream $stream)
-            {
-                parent::__construct($stream);
-            }
-        };
-
+        $reader = Reader::createFromString($content);
         $reader->setDelimiter($delimiter);
         $reader->setHeaderOffset(0);
 
