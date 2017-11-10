@@ -37,11 +37,12 @@ class IngredientDoctrineRepository implements IngredientRepository
 
     }
 
-    public function search(string $name): iterable
+    public function search(string $name, string $sortBy = 'id'): iterable
     {
         $queryBuilder = $this->createQueryBuilder('i');
         $queryBuilder->where('i.name LIKE :name');
         $queryBuilder->leftJoin(IngredientFamily::class, 'if');
+        $queryBuilder->sortBy($sortBy, 'ASC');
 
         $query = $queryBuilder->getQuery();
         $query->setParameter('name', $name);

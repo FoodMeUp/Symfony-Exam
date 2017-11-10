@@ -33,13 +33,29 @@ class ApiSearchTest extends TestCase
     public function test_it_searches_ingredients()
     {
         $repo = $this->prophesize(IngredientRepository::class);
-        $repo->search('foo')->willReturn([])->shouldBeCalled();
+        $repo->search('foo', 'id')->willReturn([])->shouldBeCalled();
 
         $serializer = $this->prophesize(SerializerInterface::class);
-        $serializer->serialize([], 'json', ['groups' => ['all']])->willReturn('[]')->shouldBeCalled();
+        $serializer->serialize([], 'json', ['groups' => ['all']])->willReturn([])->shouldBeCalled();
 
         $request = new Request;
         $request->query->set('ingredient', 'foo');
+
+        $controller = new ApiSearch($repo->reveal(), $serializer->reveal());
+        $this->assertInstanceOf(JsonResponse::class, $controller($request));
+    }
+
+    public function test_it_searches_sorted_ingredients()
+    {
+        $repo = $this->prophesize(IngredientRepository::class);
+        $repo->search('foo', 'bar')->willReturn([])->shouldBeCalled();
+
+        $serializer = $this->prophesize(SerializerInterface::class);
+        $serializer->serialize([], 'json', ['groups' => ['all']])->willReturn([])->shouldBeCalled();
+
+        $request = new Request;
+        $request->query->set('ingredient', 'foo');
+        $request->query->set('sortBy', 'bar');
 
         $controller = new ApiSearch($repo->reveal(), $serializer->reveal());
         $this->assertInstanceOf(JsonResponse::class, $controller($request));

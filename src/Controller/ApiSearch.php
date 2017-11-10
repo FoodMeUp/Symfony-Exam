@@ -37,7 +37,8 @@ class ApiSearch
             throw new BadRequestHttpException('Missing required field "ingredient"');
         }
 
-        $result = $this->repository->search($request->query->get('ingredient'));
+        // todo : validate sortBy field
+        $result = $this->repository->search($request->query->get('ingredient'), $request->query->get('sortBy', 'id'));
 
         return new JsonResponse($this->serializer->serialize($result, 'json', ['groups' => ['all']]));
     }
