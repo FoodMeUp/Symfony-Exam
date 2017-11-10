@@ -37,7 +37,7 @@ class IngredientDoctrineRepository implements IngredientRepository
 
     }
 
-    public function search(string $name, string $sortBy = 'id'): iterable
+    public function search(?IngredientFamily $family, string $name, string $sortBy = 'id'): iterable
     {
         $queryBuilder = $this->createQueryBuilder('i');
         $queryBuilder->where('i.name LIKE :name');
@@ -46,6 +46,11 @@ class IngredientDoctrineRepository implements IngredientRepository
 
         $query = $queryBuilder->getQuery();
         $query->setParameter('name', $name);
+
+        if (null !== $family) {
+            $queryBuilder->andWhere('if.id = :family');
+            $query->setParameter('family', $family);
+        }
 
         yield from $query->getResult();
     }

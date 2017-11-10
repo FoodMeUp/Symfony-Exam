@@ -22,4 +22,20 @@ class IngredientFamilyDoctrineRepository implements IngredientFamilyRepository
         $em->persist($family);
         $em->flush($family);
     }
+
+    public function get(string $id): IngredientFamily
+    {
+        $queryBuilder = $this->createQueryBuilder('if');
+
+        $queryBuilder->where('i.id = :id');
+
+        $query = $queryBuilder->getQuery();
+        $query->setParameter('id', $id);
+
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $e) {
+            throw new IngredientFamilyNotFound($id, $e);
+        }
+    }
 }
