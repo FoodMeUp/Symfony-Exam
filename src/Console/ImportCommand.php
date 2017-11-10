@@ -1,6 +1,8 @@
 <?php
 namespace App\Console;
 
+use RuntimeException;
+
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -45,7 +47,7 @@ class ImportCommand extends Command
         if (!$content) {
             $reason = error_get_last();
 
-            throw new RuntimeException("Could not open file {$file} (reason : {$reason['message']})");
+            throw new RuntimeException("Could not open file {$input->getArgument('file')} (reason : {$reason['message']})");
         }
 
         $content = utf8_encode($content);
