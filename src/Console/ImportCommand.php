@@ -48,6 +48,8 @@ class ImportCommand extends Command
             throw new RuntimeException("Could not open file {$file} (reason : {$reason['message']})");
         }
 
+        $content = utf8_encode($content);
+
         $family = null;
         $currentFamilyId = null;
 
@@ -60,7 +62,7 @@ class ImportCommand extends Command
                     $this->familyRepo->save($family);
                 }
 
-                $family = new IngredientFamily(utf8_encode($row['ORIGGPFR']));
+                $family = new IngredientFamily($row['ORIGGPFR']);
                 $currentFamilyId = $row['ORIGGPCD'];
             }
 
@@ -74,21 +76,21 @@ class ImportCommand extends Command
             $energies = $nutrients = [];
 
             foreach ($row as $key => $value) {
-                $value = trim(utf8_encode($value));
+                $value = trim($value);
 
                 if (empty($value)) {
                     continue;
                 }
 
                 if (preg_match('{^Energie, (.+?)$}', $key, $matches)) {
-                    $energies[utf8_encode($matches[1])] = $value;
+                    $energies[$matches[1]] = $value;
                     continue;
                 }
 
-                $nutrients[utf8_encode($key)] = $value;
+                $nutrients[$key] = $value;
             }
 
-            $ingredient = new Ingredient($family, utf8_encode($name), $energies, $nutrients);
+            $ingredient = new Ingredient($family, $name, $energies, $nutrients);
             $family->getIngredients()->add($ingredient);
 
             ++$i;
