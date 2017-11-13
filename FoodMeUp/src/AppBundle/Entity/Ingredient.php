@@ -34,7 +34,7 @@ class Ingredient
      *
      * @return int
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
@@ -46,7 +46,7 @@ class Ingredient
      *
      * @return Ingredient
      */
-    public function setName($name)
+    public function setName(string $name) : Ingredient
     {
         $this->name = $name;
 
@@ -58,7 +58,7 @@ class Ingredient
      *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
