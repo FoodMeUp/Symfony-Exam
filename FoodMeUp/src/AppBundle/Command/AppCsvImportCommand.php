@@ -3,10 +3,9 @@
 namespace AppBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -26,8 +25,6 @@ class AppCsvImportCommand extends ContainerAwareCommand
         $this
             ->setName('app:csv:import')
             ->setDescription('Imports CSV file to the database')
-//            ->addArgument('argument', InputArgument::OPTIONAL, 'Argument description')
-//            ->addOption('option', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }
 
@@ -36,15 +33,19 @@ class AppCsvImportCommand extends ContainerAwareCommand
         $io = new SymfonyStyle($input,$output);
         $io->title("Trying to import the CSV file to the database ...");
 
-        $io->success("The CVS has been successfully saved into the database");
+        // read the csv
+        $path = '%kernel.app_root_dir%/../src/AppBundle/Data/csv/Table_Ciqual_2016.csv';
+        $content = file_get_contents($path);
+        $CSVReader = Reader::createFromString($content);
+        $CSVReader->setDelimiter(";");
+        $CSVReader->setHeaderOffset(0);
 
-//        $argument = $input->getArgument('argument');
-//
-//        if ($input->getOption('option')) {
-//            // ...
-//        }
-//
-//        $output->writeln('Command result.');
+        foreach ($CSVReader as $row)
+        {
+
+        }
+
+        $io->success("The CVS has been successfully saved into the database");
     }
 
 }
