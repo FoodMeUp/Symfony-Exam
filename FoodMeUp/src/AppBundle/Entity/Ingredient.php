@@ -36,14 +36,14 @@ class Ingredient
     /**
      * @var iterable
      *
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json_array")
      */
     private $energies;
 
     /**
      * @var iterable
      *
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json_array")
      */
     private $nutrients;
 
