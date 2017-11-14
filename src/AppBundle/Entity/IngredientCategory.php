@@ -27,7 +27,9 @@ use JMS\Serializer\Annotation as Serializer;
  * Class IngredientCategory
  *
  * @ORM\Entity()
- * @ORM\Table()
+ * @ORM\Table(indexes={
+ *      @ORM\Index(name="ingredient_category_search_name", columns={"origgpfr"})
+ *     })
  */
 class IngredientCategory
 {

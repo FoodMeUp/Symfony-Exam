@@ -19,8 +19,10 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Ingredient;
+use AppBundle\Form\IngredientSearchType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -52,11 +54,25 @@ class IngredientApiController extends FOSRestController
     }
 
     /**
+     * @param Request $request
+     *
      * @return Response
+     *
+     * @throws \LogicException
      */
-    public function postSearchAction(): Response
+    public function postSearchAction(Request $request): Response
     {
-        $view = $this->view();
+        $result = $form = $this->createForm(IngredientSearchType::class, null, ['csrf_protection' => false]);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+            $repo = $this->getDoctrine()->getRepository(Ingredient::class);
+            $result = $repo->findByNameOrCategory($data['name'], $data['category']);
+        }
+
+        $view = $this->view($result);
 
         return $this->handleView($view);
     }

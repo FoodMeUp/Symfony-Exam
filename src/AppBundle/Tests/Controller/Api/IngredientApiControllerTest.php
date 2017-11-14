@@ -41,4 +41,25 @@ class IngredientApiControllerTest extends WebTestCase
             self::assertSame(1, $ingredient->id);
         }
     }
+
+    /**
+     * Test post for search ingredient
+     */
+    public function testPostSearchAction(): void
+    {
+        $client = $this->makeClient();
+
+        $client->request(
+            'POST',
+            $this->getUrl('api.ingredient.post_search'),
+            ['name' => 'pomme de terre', 'category' => 'Farines']
+        );
+
+        $this->isSuccessful($result = $client->getResponse());
+
+        $result = json_decode($result->getContent());
+
+        self::assertCount(1, $result);
+        self::assertSame(4090, $result[0]->origfdcd);
+    }
 }

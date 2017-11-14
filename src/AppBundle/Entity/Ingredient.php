@@ -25,8 +25,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Ingredient
  *
- * @ORM\Entity()
- * @ORM\Table()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\IngredientRepository")
+ * @ORM\Table(indexes={
+ *      @ORM\Index(name="ingredient_search_name", columns={"origfdnm"})
+ *     })
  */
 class Ingredient
 {
