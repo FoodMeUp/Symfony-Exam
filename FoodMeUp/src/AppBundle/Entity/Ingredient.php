@@ -34,6 +34,35 @@ class Ingredient
     private $family;
 
     /**
+     * @var iterable
+     *
+     * @ORM\Column(type="json")
+     */
+    private $energies;
+
+    /**
+     * @var iterable
+     *
+     * @ORM\Column(type="json")
+     */
+    private $nutrients;
+
+    /**
+     * Ingredient constructor.
+     * @param string $name
+     * @param iterable $energies
+     * @param iterable $nutrients
+     * @param IngredientFamily $ingredientFamily
+     */
+    public function __construct(string $name, iterable $energies, iterable $nutrients, IngredientFamily $ingredientFamily)
+    {
+        $this->name = $name;
+        $this->energies = $energies;
+        $this->nutrients = $nutrients;
+        $this->family = $ingredientFamily;
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -41,20 +70,6 @@ class Ingredient
     public function getId() : int
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Ingredient
-     */
-    public function setName(string $name) : Ingredient
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -68,20 +83,6 @@ class Ingredient
     }
 
     /**
-     * Set family
-     *
-     * @param IngredientFamily $family
-     *
-     * @return Ingredient
-     */
-    public function setFamily(IngredientFamily $family = null) : Ingredient
-    {
-        $this->family = $family;
-
-        return $this;
-    }
-
-    /**
      * Get family
      *
      * @return IngredientFamily
@@ -89,5 +90,23 @@ class Ingredient
     public function getFamily() : IngredientFamily
     {
         return $this->family;
+    }
+
+    /**
+     * Get energies
+     * @return iterable
+     */
+    public function getEnergies() : iterable
+    {
+        return $this->energies;
+    }
+
+    /**
+     * Get nutrients
+     * @return iterable
+     */
+    public function getNutrients() : iterable
+    {
+        return $this->nutrients;
     }
 }

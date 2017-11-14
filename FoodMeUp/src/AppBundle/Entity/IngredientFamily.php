@@ -36,6 +36,16 @@ class IngredientFamily
     private $ingredients;
 
     /**
+     * Constructor
+     * @param string $name
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+        $this->ingredients = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -46,20 +56,6 @@ class IngredientFamily
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return IngredientFamily
-     */
-    public function setName(string $name) : IngredientFamily
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
      * Get name
      *
      * @return string
@@ -67,13 +63,6 @@ class IngredientFamily
     public function getName() : string
     {
         return $this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
     }
 
     /**
