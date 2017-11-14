@@ -36,7 +36,6 @@ class SearchApiController extends Controller
                 ->setParameter('name', '%'.$searchString['Rechercher'].'%')
                 ->getQuery()
                 ->getArrayResult();
-            dump($res);die;
             return new JsonResponse($res);
         }
 
