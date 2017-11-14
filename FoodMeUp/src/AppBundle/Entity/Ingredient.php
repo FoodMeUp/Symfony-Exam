@@ -28,6 +28,10 @@ class Ingredient
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="IngredientFamily", inversedBy="ingredients")
+     */
+    private $family;
 
     /**
      * Get id
@@ -62,5 +66,28 @@ class Ingredient
     {
         return $this->name;
     }
-}
 
+    /**
+     * Set family
+     *
+     * @param IngredientFamily $family
+     *
+     * @return Ingredient
+     */
+    public function setFamily(IngredientFamily $family = null) : Ingredient
+    {
+        $this->family = $family;
+
+        return $this;
+    }
+
+    /**
+     * Get family
+     *
+     * @return IngredientFamily
+     */
+    public function getFamily() : IngredientFamily
+    {
+        return $this->family;
+    }
+}

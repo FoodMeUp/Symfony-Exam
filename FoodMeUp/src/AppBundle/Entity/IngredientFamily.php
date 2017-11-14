@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +30,10 @@ class IngredientFamily
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Ingredient", mappedBy="family", cascade={"persist","remove"})
+     */
+    private $ingredients;
 
     /**
      * Get id
@@ -62,5 +68,45 @@ class IngredientFamily
     {
         return $this->name;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ingredients = new ArrayCollection();
+    }
 
+    /**
+     * Add ingredient
+     *
+     * @param Ingredient $ingredient
+     *
+     * @return IngredientFamily
+     */
+    public function addIngredient(Ingredient $ingredient) : IngredientFamily
+    {
+        $this->ingredients[] = $ingredient;
+
+        return $this;
+    }
+
+    /**
+     * Remove ingredient
+     *
+     * @param Ingredient $ingredient
+     */
+    public function removeIngredient(Ingredient $ingredient)
+    {
+        $this->ingredients->removeElement($ingredient);
+    }
+
+    /**
+     * Get ingredients
+     *
+     * @return Collection
+     */
+    public function getIngredients() : Collection
+    {
+        return $this->ingredients;
+    }
+}
