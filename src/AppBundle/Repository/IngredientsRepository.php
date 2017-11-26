@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class IngredientsRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param string $name
+     *
+     * @return \AppBundle\Entity\Ingredients[]
+     */
+    public function findByName(string $name) {
+        return $this->createQueryBuilder('ingredients')
+            ->andWhere('ingredients.name LIKE :searchTerm')
+            ->setParameter('searchTerm', '%'.$name.'%')
+            ->getQuery()
+            ->execute();
+    }
 }
