@@ -18,8 +18,8 @@ class IngredientsRepository extends \Doctrine\ORM\EntityRepository
      */
     public function findByName(string $name) {
         return $this->createQueryBuilder('ingredients')
-            ->andWhere('ingredients.name LIKE :searchTerm')
-            ->setParameter('searchTerm', '%'.$name.'%')
+            ->andWhere('ingredients.origfdnm LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $name . '%')
             ->getQuery()
             ->execute();
     }

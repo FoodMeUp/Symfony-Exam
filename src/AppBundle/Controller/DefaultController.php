@@ -16,7 +16,6 @@ class DefaultController extends Controller
     {
         $form = $this->createForm('AppBundle\Form\IngredientsSearchType', new Ingredients());
 
-        // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'form' => $form->createView(),
         ]);

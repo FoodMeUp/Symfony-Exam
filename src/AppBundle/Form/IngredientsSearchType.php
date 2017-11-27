@@ -18,7 +18,8 @@ class IngredientsSearchType extends AbstractType
             ->add('origfdnm', TextType::class, array(
                 'attr' => array(
                     'placeholder' => 'Ingredient Name',
-                )
+                ),
+                "required" => true,
             ));
     }
     
