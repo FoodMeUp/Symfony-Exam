@@ -1,0 +1,247 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="login-block">
+        <div class="h-25">
+        </div>
+        <div class="container">
+            <div class="h-25"></div>
+            <div class="row h-50 justify-content-center align-items-center">
+                <div class="col-md-12 login-sec justify-content-center align-items-center">
+                    <h2 id="title" class="text-center">Looking for an ingredient ?</h2>
+
+                    <h4 class="text-center">Search it using a category name or an ingredient name</h4>
+
+                    {{ form_start(form) }}
+
+                    <div class="form-group">
+                        <div class="col-md-12 text-center">
+                            <div class="col-md-6 offset-md-3">
+                            {{ form_errors(form.origfdnm) }}
+                            {{ form_widget(form.origfdnm) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group justify-content-center align-items-center text-center">
+                        <button type="button" onclick="submitSearchForm();" class="btn btn-outline-primary center text-center">Rechercher</button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <div id="result_container" class="row h-50 justify-content-center align-items-center">
+                <div class="col-md-12 login-sec justify-content-center align-items-center">
+
+                    <h4 class="text-center">Results</h4>
+
+                    <table id="results_table" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Origgpcd</th>
+                            <th>Origgpfr</th>
+                            <th>Origfdcd</th>
+                            <th>Origfdnm</th>
+                            <th>Components</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="error_container" class="row h-50 justify-content-center align-items-center">
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('div#result_container').css('display', 'none');
+            $('#error_container').css('display', 'none');
+        });
+
+        function submitSearchForm() {
+            $('#results_table tbody').empty();
+            $('#error_container').empty();
+
+            var data = $("form").serialize();
+            var output = "";
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('api.ingredient.post_search_ingredients') }}",
+                data: data,
+                dataType: 'json',
+                success: function (result) {
+                    $.each(result, function (key, values) {
+                        if ($.type(values) === 'string') {
+                            $('#error_container').append('<div class="alert alert-danger" role="alert">' + values + '</div>');
+                            $('#error_container').fadeIn('slow');
+                        }
+                        else {
+                            output += '<tr>';
+                            output += '<td>' + values.origgpcd + '</td>';
+                            output += '<td>' + values.origgpfr + '</td>';
+                            output += '<td>' + values.origfdcd + '</td>';
+                            output += '<td>' + values.origfdnm + '</td>';
+
+                            var components = jQuery.parseJSON(values.components);
+
+                            output += '<td>';
+                            output += '<ul>';
+
+                            $.each(components, function(name, value) {
+                                output += '<li>' + name + ": " + value + '</li>';
+                            });
+
+                            output += '</ul>';
+                            output += '</td>';
+
+                            output += '</tr>';
+                        }
+                    });
+
+                    if (output.length > 0) {
+                        $('#results_table tbody').append(output);
+                        $('#result_container').fadeIn('slow');
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
+        .login-block {
+            min-height: 100%;
+            background: #DE6262; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to bottom, #FFB88C, #DE6262); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            /*float: left;*/
+            width: 100%;
+            padding: 50px 0;
+        }
+
+        .banner-sec {
+            background: url(https://static.pexels.com/photos/33972/pexels-photo.jpg) no-repeat left bottom;
+            background-size: cover;
+            min-height: 500px;
+            border-radius: 0 10px 10px 0;
+            padding: 0;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-inner {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .carousel-caption {
+            text-align: left;
+            left: 5%;
+        }
+
+        .login-sec {
+            /*padding: 50px 30px;*/
+            /*position: relative;*/
+        }
+
+        .login-sec .copy-text {
+            position: absolute;
+            width: 80%;
+            bottom: 20px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .login-sec .copy-text i {
+            color: #FEB58A;
+        }
+
+        .login-sec .copy-text a {
+            color: #E36262;
+        }
+
+        .login-sec h2 {
+            margin-bottom: 30px;
+            font-weight: 800;
+            font-size: 30px;
+            color: #DE6262;
+        }
+
+        #title {
+            margin-top: 30px;
+        }
+
+        .login-sec h2:after {
+            content: " ";
+            width: 100px;
+            height: 5px;
+            background: #FEB58A;
+            display: block;
+            margin-top: 20px;
+            border-radius: 3px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .login-sec h4 {
+            margin-bottom: 30px;
+            font-weight: 800;
+            font-size: 15px;
+            color: #DE6262;
+        }
+
+
+        .btn-login {
+            background: #DE6262;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .banner-text {
+            width: 70%;
+            position: absolute;
+            bottom: 40px;
+            padding-left: 20px;
+        }
+
+        .banner-text h2 {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .banner-text h2:after {
+            content: " ";
+            width: 100px;
+            height: 5px;
+            background: #FFF;
+            display: block;
+            margin-top: 20px;
+            border-radius: 3px;
+        }
+
+        .banner-text p {
+            color: #fff;
+        }
+    </style>
+
+{% endblock %}

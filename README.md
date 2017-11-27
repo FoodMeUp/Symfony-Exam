@@ -1,70 +1,79 @@
-# Symfony-Exam
+***
 
-CIQUAL importation
-====
+## Déploiement de l'application Symfony3
 
-A famous nutritionist is in need of a search engine dedicated to nutrional data.
-As for now, he only has access to the following CIQUAL table : https://pro.anses.fr/tableciqual/Documents/Table_Ciqual_2016.csv
+#### 01 - Cloner le projet dans le dossier vide du site
 
-He is asking you to help him build a modern REST API to look into this database and match a string against the value of columns ORIGGPFR
- and ORIGFDNM.
-
-Features
-----
-
-- You will download the file directly from the web and parse it programatically. Import will be made without phpmyadmin.
-- You provide a template with an input which acts like a search bar. Users will enter ingredient names in this search bar.
-- You will return a list of possible matches against this search string (ingredient names from the CSV file)
-- When the user clicks a match, he gets the list of nutrients
-- Next step : the user is able to exclude responses where the ingredient contains a specific allergen.
-
-How to
-----
-
-- You should import the CSV file in a MySQL format without phpmyadmin, programatically
-- You use code best practices : dry, formating, architecture, model
-- Requests are made through a REST API
-- JSON data is sent back
+#### 02 - Créer un utilisateur MySQL et la base de données associée.
 
 
-Extra
-----
+#### 03 - Installer les dépendances :
 
-- You are free to impress us with a nice design
-- You can add extra features (display nutrient pictures, etc)
-- You can optimize the UX search process
+```sh
+# Installer composer s'il ne l'est pas déjà :
+$ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+$ php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc09e2a0388afed865e6a3d6b3c0fad45c48e2b5fc1196ae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+$ php composer-setup.php --install-dir=bin --filename=composer
+$ php -r "unlink('composer-setup.php');"
+```
 
-Stack
-----
+```sh
+$ composer install
+# Attention : ne pas faire de `composer update` qui modifie les versions
+```
 
-Last stable versions of :
-- mySQL
-- Symfony3
-- php7
+Les paramètres à renseigner sont les suivants :
+```sh
+parameters:
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: EDITME
+    database_user: EDITME
+    database_password: EDITME
 
-FAQ
-----
+    mailer_transport: smtp
+    mailer_host: EDITME
+    mailer_user: EDITME
+    mailer_password: EDITME
+```
 
-### How do I start the project?
+#### 04 - Créer la base de données :
 
-You need a clean install of a symfony3 repository.
+```sh
+$ php bin/console doctrine:schema:create
+```
 
-### What about sort ordering and text filtering?
+#### 05 - Créer les tables :
 
-Try to display the most relevant results first. You're free to opimize the search query stirng and the search process.
+```sh
+$ php bin/console doctrine:schema:update --force
+```
 
-### What should I do when I'm finished?
+#### 06 - Commande d'import :
+```sh
+$ php bin/console import:csv Table_Ciqual_2016.csv
+```
 
-Please make a PR on the repository and send us an email to let us know we can check it.
+***
 
-### How is the exam graded?
+## Informations utiles
 
-We are looking for idiomatic use of php/symfony, and the ability to solve the problems with code that is clean and easy to read. Even though it's very small in scope, please show us how you would use the language and conventions to structure things in a clear and maintainable way.
+### Version de Symfony : 3.4.0
 
-Think of it as part of an application : the organisation has to be compatible with a larger project. Try to use Symfony best standards.
+### Version de PHP utilisée en développement : 7.1.8
 
-### This looks like it will take a while and I'm pretty busy
+### DocumentRoot : `./web`
 
-You're right! With something open-ended like this you could easily spend a week polishing and getting it just right. We don't expect you to do this, and we'll do our best to make sure you're not disadvantaged by this.
+### Modifier les paramètres de l'application :
 
-When we grade this exam we're not giving you a "score out of 100" for how many features you complete. We're trying to get some insight into your process, to see the way you work. So, by all means, spend more time if you want to. But you are also free to leave certain features out and give a written explanation of how you would approach it. The best approach is to spend your time on the features that you think is the best way to show us your strengths and experience.
+Chemin relatif du fichier contenant les paramètres à renseigner :
+`./app/config/parameters.yml`
+
+### Vérifier la configuration requise pour Symfony3 :
+```sh
+$ php bin/symfony_requirements
+```
+
+### En cas de problème avec le cache Symfony3 :
+
+Suivre ce [tutoriel](http://www.lafabriquedecode.com/blog/2014/05/symfony-2-en-finir-nettoyage-du-cache-via-cacheclear/).
