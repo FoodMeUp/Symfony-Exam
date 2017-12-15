@@ -4,7 +4,7 @@ CIQUAL importation
 ====
 
 A famous nutritionist is in need of a search engine dedicated to nutrional data.
-As for now, he only has access to the following CIQUAL table : https://pro.anses.fr/tableciqual/Documents/Table_Ciqual_2016.csv
+As for now, he only has access to the following CIQUAL table : https://ciqual.anses.fr/cms/sites/default/files/inline-files/TableCiqual2017_ExcelFR_2017%2011%2017.xls
 
 He is asking you to help him build a modern REST API to look into this database and match a string against the value of columns ORIGGPFR
  and ORIGFDNM.
