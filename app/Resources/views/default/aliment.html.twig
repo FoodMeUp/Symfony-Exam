@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ aliment.name }}</h1>
+
+    <p>
+        <lu>
+            <li>Eau : {{ aliment.eau }}</li>
+            <li>Proteine : {{ aliment.proteine|default(0) }}</li>
+            <li>Glucide : {{ aliment.glucide|default(0) }}</li>
+            <li>Lipide : {{ aliment.lipide|default(0) }}</li>
+            <li>Sucre : {{ aliment.sucre|default(0) }}</li>
+            <li>Amidon : {{ aliment.amidon|default(0) }}</li>
+        </lu>
+    </p>
+
+    <p>
+        <a href="{{ path("homepage") }}">Revenir à la page d'accueil</a>
+    </p>
+{% endblock body %}

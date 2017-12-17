@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Aliments</h1>
+    <div class="row justify-content-center">
+        {% for aliment in aliments %}
+            <div class="col-md-8" style="padding-bottom: 10px">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ aliment.name }}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ aliment.groupName }} - {{ aliment.sousGroupName }}</h6>
+                        <p class="card-text">Pour plus d'informations sur la composition de cet aliment, cliquez sur le bouton.</p>
+                        <a href="{{ path("aliment", { "code" : aliment.code }) }}" class="card-link">Plus d'informations</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock body %}

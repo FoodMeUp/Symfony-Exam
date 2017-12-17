@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Page d'accueil</h1>
+
+    <form class="form-inline" role="search" action="{{ path("aliments_list") }}" method="POST">
+        <div class="form-group mx-sm-3">
+            <label for="recherche" class="sr-only">Rechercher</label>
+            <input type="text" class="form-control" id="recherche">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Go</button>
+    </form>
+{% endblock body %}
