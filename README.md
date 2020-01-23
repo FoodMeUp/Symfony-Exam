@@ -27,19 +27,20 @@ How to
 - JSON data is sent back
 
 
-Extra
+Extra (choose some of the following iy you have time)
 ----
 
 - You are free to impress us with a nice design
 - You can add extra features (display nutrient pictures, etc)
 - You can optimize the UX search process
+- You can dockerize the environment
 
 Stack
 ----
 
 Last stable versions of :
 - mySQL
-- Symfony3
+- Symfony4/5
 - php7
 
 FAQ
@@ -61,7 +62,7 @@ Please make a PR on the repository and send us an email to let us know we can ch
 
 We are looking for idiomatic use of php/symfony, and the ability to solve the problems with code that is clean and easy to read. Even though it's very small in scope, please show us how you would use the language and conventions to structure things in a clear and maintainable way.
 
-Think of it as part of an application : the organisation has to be compatible with a larger project. Try to use Symfony best standards.
+Think of it as part of an application : the organisation has to be compatible with a larger project. Try to use php best standards.
 
 ### This looks like it will take a while and I'm pretty busy
 
